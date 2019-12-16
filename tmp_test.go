@@ -1,6 +1,7 @@
 package tmp
 
 import (
+	"errors"
 	"os"
 	"testing"
 )
@@ -26,7 +27,7 @@ func TestFile(t *testing.T) {
 			t.Logf("Created temporary file: %q\n", f.Name())
 
 			_, err = os.Stat(f.Name())
-			if err == nil || !os.IsNotExist(err) {
+			if err == nil || !(os.IsNotExist(err) || errors.Is(err, os.ErrPermission)) {
 				t.Errorf("Temporary file exists, but it should have been unlinked already: %+v\n", err)
 			}
 		})
