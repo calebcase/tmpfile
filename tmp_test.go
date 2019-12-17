@@ -58,8 +58,8 @@ func TestFile(t *testing.T) {
 			}
 
 			// Temporary file should not exist.
-			_, err = os.Stat(f.Name())
-			if err == nil || !os.IsNotExist(err) {
+			err = notExists(f.Name())
+			if err != nil {
 				t.Fatalf("Temporary file exists, but it should have been unlinked already: %+v\n", err)
 			}
 
@@ -180,11 +180,10 @@ func TestExecKill(t *testing.T) {
 	}
 
 	t.Log("Check that the temp file is removed...")
-	_, err = os.Stat(string(path))
-	if err == nil || !os.IsNotExist(err) {
+	err = notExists(string(path))
+	if err != nil {
 		t.Fatalf("Temporary file exists, but it should have been unlinked already: %+v\n", err)
 	}
-
 }
 
 func TestExecNoCleanup(t *testing.T) {
@@ -225,8 +224,8 @@ func TestExecNoCleanup(t *testing.T) {
 	}
 
 	t.Log("Check that the temp file is removed...")
-	_, err = os.Stat(string(path))
-	if err == nil || !os.IsNotExist(err) {
+	err = notExists(string(path))
+	if err != nil {
 		t.Fatalf("Temporary file exists, but it should have been unlinked already: %+v\n", err)
 	}
 }
