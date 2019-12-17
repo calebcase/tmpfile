@@ -41,9 +41,9 @@ func nextRandom() string {
 	return strconv.Itoa(int(1e9 + r%1e9))[1:]
 }
 
-// File creates a new temporary file in the directory dir using ioutil.TempFile
-// and then unlinks the file with os.Remove to ensure the file is deleted when
-// the calling process exists.
+// File creates a new temporary file in the directory dir using the same method
+// as ioutil.TempFile and then unlinks the file with os.Remove to ensure the
+// file is deleted when the calling process exists.
 func File(dir, pattern string) (f *os.File, err error) {
 	if dir == "" {
 		dir = os.TempDir()
