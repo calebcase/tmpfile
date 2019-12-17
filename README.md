@@ -1,9 +1,8 @@
-# Cross Platform Temporary Files and Directories
+# Cross Platform Temporary Files
 
-This library attempts to bridge the gap between the what is provided in ioutil
-([ioutil.TempFile][ioutil.tempfile], [ioutil.TempDir][ioutil.tempdir]) and the
-best practice of ensuring temporary files are ***always*** deleted when the
-application exits.
+This library attempts to bridge the gap between the what is provided in
+[ioutil.TempFile][ioutil.tempfile] and the best practice of ensuring temporary
+files are ***always*** deleted when the application exits.
 
 The normal way to do this on a POSIX system is to use the behavior of
 [unlink][posix.unlink] to immediately remove the directory entry for the
@@ -17,7 +16,6 @@ that is open (and ioutil does not do this).
 
 ---
 
-[ioutil.tempdir]: https://golang.org/pkg/io/ioutil/#TempDir
 [ioutil.tempfile]: https://golang.org/pkg/io/ioutil/#TempFile
 [os.remove]: https://golang.org/pkg/os/#Remove
 [posix.unlink]: https://pubs.opengroup.org/onlinepubs/9699919799/functions/unlink.html
