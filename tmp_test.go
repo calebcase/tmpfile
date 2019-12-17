@@ -70,6 +70,11 @@ func TestFile(t *testing.T) {
 				t.Fatal(err)
 			}
 
+			err = f.Sync()
+			if err != nil {
+				t.Fatal(err)
+			}
+
 			var offset int64
 
 			offset, err = f.Seek(0, os.SEEK_SET)
