@@ -62,11 +62,11 @@ func File(dir, pattern string) (f *os.File, err error) {
 
 		// https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
 		handle, err := windows.CreateFile(
-			windows.StringToUTF16Ptr(name),             // File Name
-			windows.GENERIC_READ|windows.GENERIC_WRITE, // Desired Access
-			windows.FILE_SHARE_DELETE,                  // Share Mode
-			nil,                                        // Security Attributes
-			windows.CREATE_NEW,                         // Create Disposition
+			windows.StringToUTF16Ptr(name),                            // File Name
+			windows.GENERIC_READ|windows.GENERIC_WRITE|windows.DELETE, // Desired Access
+			windows.FILE_SHARE_DELETE,                                 // Share Mode
+			nil,                                                       // Security Attributes
+			windows.CREATE_NEW,                                        // Create Disposition
 			windows.FILE_ATTRIBUTE_TEMPORARY|windows.FILE_FLAG_DELETE_ON_CLOSE, // Flags & Attributes
 			0, // Template File
 		)
