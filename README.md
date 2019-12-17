@@ -19,6 +19,7 @@ that is open (and ioutil does not do this).
 
 [ioutil.tempdir]: https://golang.org/pkg/io/ioutil/#TempDir
 [ioutil.tempfile]: https://golang.org/pkg/io/ioutil/#TempFile
+[os.remove]: https://golang.org/pkg/os/#Remove
 [posix.unlink]: https://pubs.opengroup.org/onlinepubs/9699919799/functions/unlink.html
-[windows.flags.share]: https://github.com/golang/sys/blob/master/windows/types_windows.go#L71
 [windows.flags.on_close]: https://github.com/golang/sys/blob/master/windows/types_windows.go#L108
+[windows.flags.share]: https://github.com/golang/sys/blob/master/windows/types_windows.go#L71
