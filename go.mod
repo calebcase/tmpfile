@@ -1,4 +1,4 @@
-module github.com/calebcase/gotmp
+module github.com/calebcase/tmpfile
 
 go 1.13
 
