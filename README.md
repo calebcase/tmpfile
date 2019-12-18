@@ -27,4 +27,4 @@ that is open (and ioutil does not do this).
 [windows.flags.on_close]: https://github.com/golang/sys/blob/master/windows/types_windows.go#L108
 [windows.flags.share]: https://github.com/golang/sys/blob/master/windows/types_windows.go#L71
 [workflow.tests.badge]: https://github.com/calebcase/tmpfile/workflows/tests/badge.svg
-[workflow.tests]: https://github.com/calebcase/tmpfile/actions?query=workflow%3Atest
+[workflow.tests]: https://github.com/calebcase/tmpfile/actions?query=workflow%3Atests
