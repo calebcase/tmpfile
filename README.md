@@ -1,3 +1,6 @@
+[![Documentation][godoc.badge]][godoc]
+[![Test Status][workflow.test.badge]][workflow.test]
+
 # Cross Platform Temporary Files
 
 This library attempts to bridge the gap between the what is provided in
@@ -16,8 +19,12 @@ that is open (and ioutil does not do this).
 
 ---
 
+[godoc.badge]: https://godoc.org/github.com/calebcase/tmpfile?status.svg
+[godoc]: https://godoc.org/github.com/calebcase/tmpfile
 [ioutil.tempfile]: https://golang.org/pkg/io/ioutil/#TempFile
 [os.remove]: https://golang.org/pkg/os/#Remove
 [posix.unlink]: https://pubs.opengroup.org/onlinepubs/9699919799/functions/unlink.html
 [windows.flags.on_close]: https://github.com/golang/sys/blob/master/windows/types_windows.go#L108
 [windows.flags.share]: https://github.com/golang/sys/blob/master/windows/types_windows.go#L71
+[workflow.test.badge]: https://github.com/calebcase/tmpfile/workflows/.github/workflows/test.yml/badge.svg
+[workflow.test]: https://github.com/calebcase/tmpfile/actions?query=workflow%3ATest
