@@ -5,7 +5,7 @@
 // This is a copied and modified version of the code provided in:
 // https://golang.org/src/io/ioutil/tempfile.go
 
-package tmp
+package tmpfile
 
 import (
 	"os"
@@ -44,7 +44,7 @@ func nextRandom() string {
 // File creates a new temporary file in the directory dir using the same method
 // as ioutil.TempFile and then unlinks the file with os.Remove to ensure the
 // file is deleted when the calling process exists.
-func File(dir, pattern string) (f *os.File, err error) {
+func New(dir, pattern string) (f *os.File, err error) {
 	if dir == "" {
 		dir = os.TempDir()
 	}

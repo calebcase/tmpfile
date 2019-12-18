@@ -1,4 +1,4 @@
-package tmp
+package tmpfile
 
 import (
 	"bufio"
@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-func TestFile(t *testing.T) {
+func TestNew(t *testing.T) {
 	var err error
 
 	for _, tc := range []struct {
@@ -33,7 +33,7 @@ func TestFile(t *testing.T) {
 
 			name := strings.Join([]string{tc.TmpPrefix, tc.TmpSuffix}, "*")
 
-			f, err = File(tc.TmpDir, name)
+			f, err = New(tc.TmpDir, name)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -111,7 +111,7 @@ func TestNoCleanup(t *testing.T) {
 
 	var f *os.File
 
-	f, err = File("", "test-no-cleanup-")
+	f, err = New("", "test-no-cleanup-")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -130,7 +130,7 @@ func TestPause(t *testing.T) {
 
 	var f *os.File
 
-	f, err = File("", "test-pause-")
+	f, err = New("", "test-pause-")
 	if err != nil {
 		t.Fatal(err)
 	}

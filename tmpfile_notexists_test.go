@@ -1,6 +1,6 @@
 // +build !windows
 
-package tmp
+package tmpfile
 
 import (
 	"errors"

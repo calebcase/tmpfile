@@ -1,6 +1,6 @@
 // +build !windows
 
-package tmp
+package tmpfile
 
 import (
 	"io/ioutil"
@@ -10,7 +10,7 @@ import (
 // File creates a new temporary file in the directory dir using ioutil.TempFile
 // and then unlinks the file with os.Remove to ensure the file is deleted when
 // the calling process exists.
-func File(dir, pattern string) (f *os.File, err error) {
+func New(dir, pattern string) (f *os.File, err error) {
 	f, err = ioutil.TempFile(dir, pattern)
 	if err != nil {
 		return
