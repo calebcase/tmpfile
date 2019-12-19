@@ -10,7 +10,7 @@ import (
 func notExists(path string) error {
 	_, err := os.Stat(path)
 	if err == nil {
-		return errors.New("File exists.")
+		return errors.New("file exists")
 	} else if !os.IsNotExist(err) {
 		return err
 	}
