@@ -3,6 +3,7 @@ package tmpfile
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -28,6 +29,7 @@ func TestNew(t *testing.T) {
 		{"cwd dir with prefix and suffix", ".", "tmp-test-", "-tmp-test"},
 		{"cwd dir with suffix", ".", "", "-tmp-test"},
 	} {
+		tc := tc
 		t.Run(tc.Name, func(t *testing.T) {
 			var f *os.File
 
@@ -65,7 +67,7 @@ func TestNew(t *testing.T) {
 
 			// Temporary file should still be read/write/seek-able.
 			msg := "Hello world!\n"
-			_, err = fmt.Fprintf(f, msg)
+			_, err = f.Write([]byte(msg))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -77,7 +79,7 @@ func TestNew(t *testing.T) {
 
 			var offset int64
 
-			offset, err = f.Seek(0, os.SEEK_SET)
+			offset, err = f.Seek(0, io.SeekStart)
 			if err != nil {
 				t.Fatal(err)
 			}

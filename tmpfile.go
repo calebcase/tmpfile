@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-// File creates a new temporary file in the directory dir using ioutil.TempFile
+// New creates a new temporary file in the directory dir using ioutil.TempFile
 // and then unlinks the file with os.Remove to ensure the file is deleted when
 // the calling process exists.
 func New(dir, pattern string) (f *os.File, err error) {
