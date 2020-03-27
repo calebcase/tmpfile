@@ -48,21 +48,37 @@ func TestNew(t *testing.T) {
 
 			t.Logf("Created temporary file: %q\n", f.Name())
 
+			expectedDir := tc.TmpDir
+			if expectedDir == "" {
+				expectedDir = os.TempDir()
+			}
+			expectedDir = strings.TrimRight(expectedDir, "/")
+
 			// Temporary file name should match the pattern.
 			basename := filepath.Base(f.Name())
+			usedDir := filepath.Dir(f.Name())
 
-			if tc.TmpPrefix != "" && !strings.HasPrefix(basename, tc.TmpPrefix) {
-				t.Fatalf("Temporary file name does not match prefix: %q != %q\n", name, basename)
+			// Ensure file exists in correct directory.
+			if usedDir != expectedDir {
+				t.Fatalf("Temporary file was created in %q instead of %q", usedDir, expectedDir)
 			}
 
-			if tc.TmpSuffix != "" && !strings.HasSuffix(basename, tc.TmpSuffix) {
-				t.Fatalf("Temporary file name does not match suffix: %q != %q\n", name, basename)
-			}
+			if basename != "." {
+				// The tempfile is named, so ensure its name complies with the
+				// specified pattern.
+				if tc.TmpPrefix != "" && !strings.HasPrefix(basename, tc.TmpPrefix) {
+					t.Fatalf("Temporary file name does not match prefix: %q != %q\n", name, basename)
+				}
 
-			// Temporary file should not exist.
-			err = notExists(f.Name())
-			if err != nil {
-				t.Fatalf("Temporary file exists, but it should have been unlinked already: %+v\n", err)
+				if tc.TmpSuffix != "" && !strings.HasSuffix(basename, tc.TmpSuffix) {
+					t.Fatalf("Temporary file name does not match suffix: %q != %q\n", name, basename)
+				}
+
+				// Temporary file should not exist.
+				err = notExists(f.Name())
+				if err != nil {
+					t.Fatalf("Temporary file exists, but it should have been unlinked already: %+v\n", err)
+				}
 			}
 
 			// Temporary file should still be read/write/seek-able.
@@ -186,10 +202,12 @@ func TestExecKill(t *testing.T) {
 		t.Fatalf("Expected the process to exit with an error, but it didn't.\n")
 	}
 
-	t.Log("Check that the temp file is removed...")
-	err = notExists(string(path))
-	if err != nil {
-		t.Fatalf("Temporary file exists, but it should have been unlinked already: %+v\n", err)
+	if !strings.HasSuffix(string(path), "/.") {
+		t.Log("Check that the temp file is removed...")
+		err = notExists(string(path))
+		if err != nil {
+			t.Fatalf("Temporary file exists, but it should have been unlinked already: %+v\n", err)
+		}
 	}
 }
 
@@ -230,9 +248,11 @@ func TestExecNoCleanup(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	t.Log("Check that the temp file is removed...")
-	err = notExists(string(path))
-	if err != nil {
-		t.Fatalf("Temporary file exists, but it should have been unlinked already: %+v\n", err)
+	if !strings.HasSuffix(string(path), "/.") {
+		t.Log("Check that the temp file is removed...")
+		err = notExists(string(path))
+		if err != nil {
+			t.Fatalf("Temporary file exists, but it should have been unlinked already: %+v\n", err)
+		}
 	}
 }
