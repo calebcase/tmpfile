@@ -1,7 +1,9 @@
 package tmpfile
 
 import (
+	"io/ioutil"
 	"os"
+	"syscall"
 )
 
 // oTMPFILE is a flag indicating that the open(2) syscall should create
@@ -35,5 +37,28 @@ func New(dir, pattern string) (f *os.File, err error) {
 	if dir == "" {
 		dir = os.TempDir()
 	}
-	return os.OpenFile(dir+"/.", os.O_RDWR|oTMPFILE, 0600)
+
+	f, err = os.OpenFile(dir+"/.", os.O_RDWR|oTMPFILE, 0600)
+	if err != nil {
+		if pathErr, ok := err.(*os.PathError); ok {
+			if sysErr, ok := pathErr.Err.(syscall.Errno); ok {
+				// receiving any of these errors suggests the underlying
+				// filesystem does not support O_TMPFILE. There are other
+				// situations where these errors could arise, but in all
+				// cases, we at least know that it is safe to try again
+				// without O_TMPFILE.
+				if sysErr == syscall.EINVAL || sysErr == syscall.EISDIR || sysErr == syscall.EOPNOTSUPP {
+					// try creating a tempfile the old-fashioned way
+					f, err = ioutil.TempFile(dir, pattern)
+					if err != nil {
+						return f, err
+					}
+
+					err = os.Remove(f.Name())
+				}
+			}
+		}
+	}
+
+	return f, err
 }
