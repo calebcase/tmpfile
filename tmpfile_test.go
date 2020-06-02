@@ -1,3 +1,5 @@
+// Copyright 2019 Caleb Case
+
 package tmpfile
 
 import (

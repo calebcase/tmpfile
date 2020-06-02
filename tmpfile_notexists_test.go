@@ -1,3 +1,4 @@
+// Copyright 2019 Caleb Case
 // +build !windows
 
 package tmpfile
