@@ -17,6 +17,24 @@ necessary to open the files with special flags
 [FILE_FLAG_DELETE_ON_CLOSE][windows.flags.on_close]) to enable removing a file
 that is open (and ioutil does not do this).
 
+Example usage:
+
+```go
+package main
+
+import "github.com/calebcase/tmpfile"
+
+func main() {
+	f, err := tmpfile.New("", "example-*")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	f.WriteString("Example Data")
+}
+```
+
 ---
 
 [godoc.badge]: https://godoc.org/github.com/calebcase/tmpfile?status.svg

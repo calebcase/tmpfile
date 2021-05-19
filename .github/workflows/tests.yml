@@ -13,33 +13,30 @@ jobs:
     strategy:
       matrix:
         go-version:
-          - '1.13.x'
+          - '1.13'
+          - '1.14'
+          - '1.15'
+          - '1.16'
         platform:
           - 'ubuntu-latest'
           - 'macos-latest'
           - 'windows-latest'
     runs-on: ${{ matrix.platform }}
     steps:
-      - name: 'Install Go'
-        uses: 'actions/setup-go@v1'
-        with:
-          go-version: ${{ matrix.go-version }}
       - name: 'Setup Environment'
         shell: bash
         run: |
-          echo "::set-env name=GOPATH::$(go env GOPATH)"
-          echo "::add-path::$(go env GOPATH)/bin"
           git config --global core.autocrlf false
-      - name: 'Install Linter'
-        run: |
-          git clone https://github.com/golangci/golangci-lint -b v1.21.0
-          cd golangci-lint/cmd/golangci-lint
-          go install
+      - name: 'Install Go'
+        uses: 'actions/setup-go@v2'
+        with:
+          go-version: ${{ matrix.go-version }}
       - name: 'Checkout code'
-        uses: 'actions/checkout@v1'
+        uses: 'actions/checkout@v2'
       - name: 'Lint'
-        run: |
-          golangci-lint run
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.40.1
       - name: 'Test'
         run: |
           go test ./...
